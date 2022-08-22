@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.2.0"
+VERSION="1.2.1"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -69,6 +69,9 @@ return frontAppName & ":  " & windowTitle
 		if [ "$CURRENT_TITLE" == "Finder:  Quick Look" ]; then
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
+		fi
+		if [ "$CURRENT_TITLE" == "Safari:  " ]; then
+			CURRENT_TITLE="$LAST_TITLE"
 		fi
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
 			echo "$(date +%T)""   ""$CURRENT_TITLE"
