@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.2.1"
+VERSION="1.3.0"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -70,7 +70,8 @@ return frontAppName & ":  " & windowTitle
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
 		fi
-		if [ "$CURRENT_TITLE" == "Safari:  " ]; then
+		if [[ "$CURRENT_TITLE" == *":  " ]]; then
+			# ignore if window title is missing
 			CURRENT_TITLE="$LAST_TITLE"
 		fi
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
