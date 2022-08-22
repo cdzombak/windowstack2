@@ -40,13 +40,3 @@ Example: `WINDOWSTACK2_ERRCOLOR="1;33" ./windowstack.sh`
 [WindowStack 1](https://github.com/cdzombak/WindowStack) was an overly complex, initial attempt to implement this in Objective-C. IIRC I ran into issues trying to use the runloop in a CLI app.
 
 This implementation is simpler and works.
-
-## Known Limitations
-
-### QuickLook
-
-QuickLook window titles are not printed. Instead, we get the error:
-
-```
-358:363: execution error: System Events got an error: Can’t get window 1 of process "Finder" whose value of attribute "AXMain" = true. Invalid index. (-1719)
-```

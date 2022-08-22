@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.1.0"
+VERSION="1.2.0"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -33,6 +33,19 @@ LAST_TITLE=""
 RED='\033[0;31m'
 NC='\033[0m'
 
+finder_selection() {
+	osascript 2> /dev/null <<EOF
+set output to ""
+tell application "Finder" to set the_selection to selection
+set item_count to count the_selection
+repeat with item_index from 1 to count the_selection
+	if item_index is less than item_count then set the_delimiter to "\n"
+	if item_index is item_count then set the_delimiter to ""
+	set output to output & ((item item_index of the_selection as alias)'s POSIX path) & the_delimiter
+end repeat
+EOF
+}
+
 while true; do
 	CURRENT_TITLE="$(osascript -e '
 global frontApp, frontAppName, windowTitle
@@ -43,7 +56,7 @@ tell application "System Events"
 	set frontAppName to name of frontApp
 	tell process frontAppName
 		if (count of windows) > 0 then
-			tell (1st window whose value of attribute "AXMain" is true)
+			tell (1st window)
 				set windowTitle to value of attribute "AXTitle"
 			end tell
 		end if
@@ -53,6 +66,10 @@ return frontAppName & ":  " & windowTitle
 ' 2>&1)"
 
 	if [ $? -eq 0 ]; then
+		if [ "$CURRENT_TITLE" == "Finder:  Quick Look" ]; then
+			SELECTION="$(finder_selection)"
+			CURRENT_TITLE="Quick Look:  $SELECTION"
+		fi
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
 			echo "$(date +%T)""   ""$CURRENT_TITLE"
 			LAST_TITLE="$CURRENT_TITLE"
