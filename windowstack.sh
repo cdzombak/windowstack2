@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.3.0"
+VERSION="1.3.1"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -70,8 +70,9 @@ return frontAppName & ":  " & windowTitle
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
 		fi
-		if [[ "$CURRENT_TITLE" == *":  " ]]; then
+		if [[ "$CURRENT_TITLE" == *":  " && "$CURRENT_TITLE" != "zoom.us:"* ]]; then
 			# ignore if window title is missing
+			# unless it's zoom, which misbehaves
 			CURRENT_TITLE="$LAST_TITLE"
 		fi
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
