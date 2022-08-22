@@ -61,7 +61,7 @@ while true; do
 		echo "$(date +%T)""   ""$CURRENT_TITLE"
 		LAST_TITLE="$CURRENT_TITLE"
 	fi
-	if [ $(( SECONDS - LAST_PMSET_CHECK_S )) -gt 9 ]; then
+	if [ $(( SECONDS - LAST_PMSET_CHECK_S )) -gt 29 ]; then
 		do_pmset_check
 	fi
 	sleep $SLEEP_INTERVAL
