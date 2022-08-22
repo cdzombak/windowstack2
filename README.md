@@ -2,6 +2,14 @@
 
 Keep a log of frontmost macOS window titles in your terminal, for when you get distracted and need to remember, “what was I doing?”
 
+## Installation
+
+```shell
+export DEST_DIR="$HOME/opt/bin"  # change to your desired destination directory
+wget "https://raw.githubusercontent.com/cdzombak/windowstack2/main/windowstack.sh" -O "$DEST_DIR/windowstack"
+chmod +x "$DEST_DIR/windowstack"
+```
+
 ## Usage
 
 ```shell
