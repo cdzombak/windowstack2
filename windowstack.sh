@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-VERSION="1.0.0"
+VERSION="1.0.1"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -11,10 +11,6 @@ if [ $# -gt 0 ]; then
 	echo "unknown arg: $1"
 	exit 1
 fi
-
-LAST_TITLE=""
-SLEEP_INTERVAL=1
-LAST_PMSET_CHECK_S=$SECONDS
 
 current_window_title() {
 	osascript -e '
@@ -44,14 +40,20 @@ return frontAppName & ":  " & windowTitle
 	fi
 }
 
+SLEEP_INTERVAL=""
+LAST_PMSET_CHECK_S=$SECONDS
+
 do_pmset_check() {
 	if [[ $(pmset -g ps | head -1) =~ "AC Power" ]]; then
 		SLEEP_INTERVAL=1
 	else
 		SLEEP_INTERVAL=3
 	fi
+	LAST_PMSET_CHECK_S=$SECONDS
 }
 do_pmset_check
+
+LAST_TITLE=""
 
 while true; do
 	CURRENT_TITLE="$(current_window_title)"
