@@ -31,8 +31,15 @@ do_pmset_check
 
 LAST_TITLE=""
 
+DFMT="%T"
 RED='\033[0;31m'
 NC='\033[0m'
+if [ ! -t 1 ]; then
+	RED=""
+	NC=""
+	ERRCOLOR=""
+	DFMT="%F %T %Z"
+fi
 
 finder_selection() {
 	osascript 2> /dev/null <<EOF
@@ -84,7 +91,7 @@ return frontAppName & ":  " & windowTitle
 
 		# If the title has changed since the last printed title, print it:
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
-			echo "$(date +%T)""   ""$CURRENT_TITLE"
+			echo "$(date +"$DFMT")   $CURRENT_TITLE"
 			LAST_TITLE="$CURRENT_TITLE"
 		fi
 	# Handle Accessibility permissions error:
@@ -94,7 +101,7 @@ return frontAppName & ":  " & windowTitle
 		exit 1
 	# Handle/ignore any other error depending on config:
 	elif [[ "$ERRCOLOR" != "NONE" ]] ; then
-		echo -e "${ERRCOLOR}$(date +%T)   $CURRENT_TITLE${NC}"
+		echo -e "${ERRCOLOR}$(date +"$DFMT")   $CURRENT_TITLE${NC}"
 	fi
 
 	# Adjust polling interval based on power source:
