@@ -77,6 +77,10 @@ return frontAppName & ":  " & windowTitle
 		if [[ "$CURRENT_TITLE" == *":  " && "$CURRENT_TITLE" != "zoom.us:"* ]]; then
 			CURRENT_TITLE="$LAST_TITLE"
 		fi
+		# Strip out trailing ":  ":
+		CURRENT_TITLE="$(sed 's|:  $||' <<<"$CURRENT_TITLE")"
+
+		# If the title has changed since the last printed title, print it:
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
 			echo "$(date +%T)""   ""$CURRENT_TITLE"
 			LAST_TITLE="$CURRENT_TITLE"
