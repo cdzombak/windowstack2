@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<dict>
+		<key>Crashed</key>
+		<false/>
+		<key>SuccessfulExit</key>
+		<true/>
+	</dict>
+	<key>Label</key>
+	<string>com.dzombak.windowstack2</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>Nice</key>
+	<integer>5</integer>
+	<key>Program</key>
+	<string>/Users/cdzombak/opt/bin/windowstack</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>StandardErrorPath</key>
+	<string>/tmp/com.dzombak.windowstack2.stderr</string>
+	<key>StandardOutPath</key>
+	<string>/Users/cdzombak/.windowstack.log</string>
+</dict>
+</plist>
