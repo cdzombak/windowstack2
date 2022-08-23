@@ -70,9 +70,11 @@ return frontAppName & ":  " & windowTitle
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
 		fi
+		# Strip out trailing " - Google Chrome":
+		CURRENT_TITLE="$(sed 's| - Google Chrome$||' <<<"$CURRENT_TITLE")"
+		# Ignore this window if its title is missing:
+		# (except for Zoom, which misbehaves)
 		if [[ "$CURRENT_TITLE" == *":  " && "$CURRENT_TITLE" != "zoom.us:"* ]]; then
-			# ignore if window title is missing
-			# unless it's zoom, which misbehaves
 			CURRENT_TITLE="$LAST_TITLE"
 		fi
 		if [ "$LAST_TITLE" != "$CURRENT_TITLE" ]; then
