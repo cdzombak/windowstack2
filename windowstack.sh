@@ -9,6 +9,7 @@ VERSION="1.3.2"
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
 		echo "windowstack2 $VERSION"
+		echo "https://github.com/cdzombak/windowstack2"
 		exit 0
 	fi
 	echo "unknown arg: $1"
