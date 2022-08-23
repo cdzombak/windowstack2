@@ -64,8 +64,9 @@ tell application "System Events"
 end tell
 return frontAppName & ":  " & windowTitle
 ' 2>&1)"
-
 	if [ $? -eq 0 ]; then
+		# Cleanup the title string:
+		# Print Quick Look filename instead of "Finder:  Quick Look":
 		if [ "$CURRENT_TITLE" == "Finder:  Quick Look" ]; then
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
@@ -85,6 +86,7 @@ return frontAppName & ":  " & windowTitle
 			echo "$(date +%T)""   ""$CURRENT_TITLE"
 			LAST_TITLE="$CURRENT_TITLE"
 		fi
+	# Handle Accessibility permissions error:
 	elif [[ "$CURRENT_TITLE" =~ "-25211" ]]; then
 		echo -e "${RED}Your terminal application must be allowed Accessibility permissions. Please set that now, in the Security & Privacy preference pane.${NC}"
 		open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
@@ -94,8 +96,10 @@ return frontAppName & ":  " & windowTitle
 		echo -e "${ERRCOLOR}$(date +%T)   $CURRENT_TITLE${NC}"
 	fi
 
+	# Adjust polling interval based on power source:
 	if [ $(( SECONDS - LAST_PMSET_CHECK_S )) -gt 29 ]; then
 		do_pmset_check
 	fi
+
 	sleep $SLEEP_INTERVAL
 done
