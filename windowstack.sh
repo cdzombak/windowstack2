@@ -16,6 +16,19 @@ if [ $# -gt 0 ]; then
 	exit 1
 fi
 
+finder_selection() {
+	osascript 2> /dev/null <<EOF
+set output to ""
+tell application "Finder" to set the_selection to selection
+set item_count to count the_selection
+repeat with item_index from 1 to count the_selection
+	if item_index is less than item_count then set the_delimiter to "\n"
+	if item_index is item_count then set the_delimiter to ""
+	set output to output & ((item item_index of the_selection as alias)'s POSIX path) & the_delimiter
+end repeat
+EOF
+}
+
 SLEEP_INTERVAL=""
 LAST_PMSET_CHECK_S=$SECONDS
 
@@ -40,19 +53,6 @@ if [ ! -t 1 ]; then
 	ERRCOLOR=""
 	DFMT="%F %T %Z"
 fi
-
-finder_selection() {
-	osascript 2> /dev/null <<EOF
-set output to ""
-tell application "Finder" to set the_selection to selection
-set item_count to count the_selection
-repeat with item_index from 1 to count the_selection
-	if item_index is less than item_count then set the_delimiter to "\n"
-	if item_index is item_count then set the_delimiter to ""
-	set output to output & ((item item_index of the_selection as alias)'s POSIX path) & the_delimiter
-end repeat
-EOF
-}
 
 while true; do
 	CURRENT_TITLE="$(osascript -e '
