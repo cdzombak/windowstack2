@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.3.2"
+VERSION="1.4.0"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
