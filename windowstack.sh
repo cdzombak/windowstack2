@@ -83,8 +83,9 @@ return frontAppName & ":  " & windowTitle
 		echo -e "${RED}Your terminal application must be allowed Accessibility permissions. Please set that now, in the Security & Privacy preference pane.${NC}"
 		open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 		exit 1
+	# Handle/ignore any other error depending on config:
 	elif [[ "$ERRCOLOR" != "NONE" ]] ; then
-		echo -e "$(date +%T)""   ""${ERRCOLOR}$CURRENT_TITLE${NC}"
+		echo -e "${ERRCOLOR}$(date +%T)   $CURRENT_TITLE${NC}"
 	fi
 
 	if [ $(( SECONDS - LAST_PMSET_CHECK_S )) -gt 29 ]; then
