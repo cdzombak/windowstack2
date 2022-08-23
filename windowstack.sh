@@ -4,7 +4,7 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.4.0"
+VERSION="1.4.1"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
@@ -74,17 +74,20 @@ return frontAppName & ":  " & windowTitle
 ' 2>&1)"
 	if [ $? -eq 0 ]; then
 		# Cleanup the title string:
-		# Print Quick Look filename instead of "Finder:  Quick Look":
 		if [ "$CURRENT_TITLE" == "Finder:  Quick Look" ]; then
+			# Print Quick Look filename instead of "Finder:  Quick Look":
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
-		fi
-		# Strip out trailing " - Google Chrome":
-		CURRENT_TITLE="$(sed 's| - Google Chrome$||' <<<"$CURRENT_TITLE")"
-		# Ignore this window if its title is missing:
-		# (except for Zoom, which misbehaves)
-		if [[ "$CURRENT_TITLE" == *":  " && "$CURRENT_TITLE" != "zoom.us:"* ]]; then
+		elif [ "$CURRENT_TITLE" == "zoom.us:  missing value" ]; then
+			# Work around another Zoom oddity
+			CURRENT_TITLE="zoom.us"
+		elif [[ "$CURRENT_TITLE" == *":  " && "$CURRENT_TITLE" != "zoom.us:"* ]]; then
+			# Ignore this window if its title is missing:
+			# (except for Zoom, which misbehaves)
 			CURRENT_TITLE="$LAST_TITLE"
+		else
+			# Strip out trailing " - Google Chrome":
+			CURRENT_TITLE="$(sed 's| - Google Chrome$||' <<<"$CURRENT_TITLE")"
 		fi
 		# Strip out trailing ":  ":
 		CURRENT_TITLE="$(sed 's|:  $||' <<<"$CURRENT_TITLE")"
