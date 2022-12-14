@@ -29,6 +29,22 @@ end repeat
 EOF
 }
 
+things_selection() {
+	osascript 2> /dev/null <<EOF
+set output to ""
+tell application "Things3" to set the_selection to selected to dos
+set item_count to count the_selection
+set retv to ""
+if item_count is greater than 0 then
+	set retv to name of first item of the_selection
+	if item_count is greater than 1 then
+		set retv to retv & "(& " & item_count - 1 & " others)"
+	end if
+end if
+return retv
+EOF
+}
+
 SLEEP_INTERVAL=""
 LAST_PMSET_CHECK_S=$SECONDS
 
@@ -78,6 +94,13 @@ return frontAppName & ":  " & windowTitle
 			# Print Quick Look filename instead of "Finder:  Quick Look":
 			SELECTION="$(finder_selection)"
 			CURRENT_TITLE="Quick Look:  $SELECTION"
+		elif [[ "$CURRENT_TITLE" =~ ^Things3\:\ \ .* ]]; then
+			# Print Things selected item:
+			CURRENT_TITLE=${CURRENT_TITLE//Things3/Things}
+			SELECTION="$(things_selection)"
+			if [[ -n "$SELECTION" ]]; then
+				CURRENT_TITLE="$CURRENT_TITLE - $SELECTION"
+			fi
 		elif [ "$CURRENT_TITLE" == "zoom.us:  missing value" ]; then
 			# Work around another Zoom oddity
 			CURRENT_TITLE="zoom.us"
