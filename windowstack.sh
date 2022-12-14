@@ -34,7 +34,7 @@ LAST_PMSET_CHECK_S=$SECONDS
 
 do_pmset_check() {
 	if [[ $(pmset -g ps | head -1) =~ "AC Power" ]]; then
-		SLEEP_INTERVAL=1
+		SLEEP_INTERVAL=0.25
 	else
 		SLEEP_INTERVAL=3
 	fi
