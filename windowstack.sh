@@ -38,7 +38,7 @@ set retv to ""
 if item_count is greater than 0 then
 	set retv to name of first item of the_selection
 	if item_count is greater than 1 then
-		set retv to retv & "(& " & item_count - 1 & " others)"
+		set retv to retv & " (& " & item_count - 1 & " others)"
 	end if
 end if
 return retv
