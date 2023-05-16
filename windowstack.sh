@@ -108,6 +108,9 @@ return frontAppName & ":  " & windowTitle
 			# Ignore this window if its title is missing:
 			# (except for Zoom, which misbehaves)
 			CURRENT_TITLE="$LAST_TITLE"
+		elif [ "$CURRENT_TITLE" == "iTerm2:  windowstack" ]; then
+			# Ignore this window if it's a terminal running windowstack:
+			CURRENT_TITLE="$LAST_TITLE"
 		else
 			# Strip out trailing " - Google Chrome":
 			CURRENT_TITLE="$(sed 's| - Google Chrome$||' <<<"$CURRENT_TITLE")"
