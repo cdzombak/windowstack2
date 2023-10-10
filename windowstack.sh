@@ -19,7 +19,7 @@ if [ $# -gt 0 ]; then
 fi
 
 finder_selection() {
-	osascript 2> /dev/null <<EOF
+	osascript 2>/dev/null <<EOF
 set output to ""
 tell application "Finder" to set the_selection to selection
 set item_count to count the_selection
@@ -32,7 +32,7 @@ EOF
 }
 
 things_selection() {
-	osascript 2> /dev/null <<EOF
+	osascript 2>/dev/null <<EOF
 set output to ""
 tell application "Things3" to set the_selection to selected to dos
 set item_count to count the_selection
@@ -90,6 +90,7 @@ tell application "System Events"
 end tell
 return frontAppName & ":  " & windowTitle
 ' 2>&1)"
+	# shellcheck disable=SC2181
 	if [ $? -eq 0 ]; then
 		# Cleanup the title string:
 		if [ "$CURRENT_TITLE" == "Finder:  Quick Look" ]; then
@@ -115,9 +116,11 @@ return frontAppName & ":  " & windowTitle
 			CURRENT_TITLE="$LAST_TITLE"
 		else
 			# Strip out trailing " - Google Chrome":
+			# shellcheck disable=SC2001
 			CURRENT_TITLE="$(sed 's| - Google Chrome$||' <<<"$CURRENT_TITLE")"
 		fi
 		# Strip out trailing ":  ":
+		# shellcheck disable=SC2001
 		CURRENT_TITLE="$(sed 's|:  $||' <<<"$CURRENT_TITLE")"
 
 		# If the title has changed since the last printed title, print it:
@@ -131,12 +134,12 @@ return frontAppName & ":  " & windowTitle
 		open "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
 		exit 1
 	# Handle/ignore any other error depending on config:
-	elif [[ "$ERRCOLOR" != "NONE" ]] ; then
+	elif [[ "$ERRCOLOR" != "NONE" ]]; then
 		echo -e "${ERRCOLOR}$(date +"$DFMT")   $CURRENT_TITLE${NC}"
 	fi
 
 	# Adjust polling interval based on power source:
-	if [ $(( SECONDS - LAST_PMSET_CHECK_S )) -gt 29 ]; then
+	if [ $((SECONDS - LAST_PMSET_CHECK_S)) -gt 29 ]; then
 		do_pmset_check
 	fi
 

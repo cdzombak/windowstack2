@@ -4,21 +4,21 @@ Keep a log of frontmost macOS window titles in your terminal, for when you get d
 
 ## Installation
 
-```shell
-export DEST_DIR="$HOME/opt/bin"  # change to your desired destination directory
-wget "https://raw.githubusercontent.com/cdzombak/windowstack2/main/windowstack.sh" -O "$DEST_DIR/windowstack"
-chmod +x "$DEST_DIR/windowstack"
-```
+TODO
 
 ## Usage
 
 ```shell
-windowstack
+windowstack2
 ```
 
-## Accessibility Permissions
+### Accessibility Permissions
 
 Your terminal app needs to be allowed Accessibility permission, in the Security & Privacy pane of the System Preferences app.
+
+### Background Job
+
+TODO
 
 ## Configuration
 
