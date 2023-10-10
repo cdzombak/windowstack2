@@ -107,6 +107,7 @@ jobs:
       - name: Build binaries
         run: make all
       - name: Prepare release artifacts
+        id: prepare_artifacts
         working-directory: out/
         run: |
           mkdir ./gh-release
