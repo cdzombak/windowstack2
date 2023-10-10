@@ -4,12 +4,14 @@ set -o pipefail
 [[ -z "${WINDOWSTACK2_ERRCOLOR}" ]] && ERRCOLOR="NONE" || ERRCOLOR="\033[${WINDOWSTACK2_ERRCOLOR}m"
 set -u
 
-VERSION="1.4.1"
+__WINDOWSTACK_VERSION__="<dev>"
 
 if [ $# -gt 0 ]; then
 	if [[ "$1" == "-v" || "$1" == "--version" ]]; then
-		echo "windowstack2 $VERSION"
-		echo "https://github.com/cdzombak/windowstack2"
+		echo "$(basename "$0") $__WINDOWSTACK_VERSION__"
+		echo ""
+		echo "GitHub: https://github.com/cdzombak/windowstack2"
+		echo "Author: Chris Dzombak <https://www.dzombak.com>"
 		exit 0
 	fi
 	echo "unknown arg: $1"
