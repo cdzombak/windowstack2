@@ -1,6 +1,7 @@
 # https://megalinter.io/configuration/
 ---
 VALIDATE_ALL_CODEBASE: true
+BASH_SHFMT_FILTER_REGEX_EXCLUDE: \.formula\.sh
 
 DISABLE:
   - SPELL

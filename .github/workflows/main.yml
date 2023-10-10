@@ -112,11 +112,15 @@ jobs:
           mkdir ./gh-release
           find . -name '${{ needs.meta.outputs.bin_name }}-*' -executable -type f -maxdepth 1 -print0 \
             | xargs -0 -I {} tar --transform='flags=r;s|.*|${{ needs.meta.outputs.bin_name }}|' -czvf ./gh-release/{}.tar.gz {}
+          echo "tgz_sha256_allarch=$(shasum -a 256 ./gh-release/${{ needs.meta.outputs.bin_name }}-${{ needs.meta.outputs.bin_version }}-all.tar.gz  | cut -d " " -f 1)" >> "$GITHUB_OUTPUT"
       - name: Upload binaries & packages
         uses: actions/upload-artifact@v3
         with:
           name: ${{ needs.meta.outputs.bin_name }} Binary Artifacts
           path: out/gh-release/*
+
+    outputs:
+      tgz_sha256_allarch: ${{ steps.prepare_artifacts.outputs.tgz_sha256_allarch }}
 
   release:
     name: GitHub (Pre)Release
