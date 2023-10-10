@@ -16,12 +16,12 @@
 	<key>Nice</key>
 	<integer>5</integer>
 	<key>Program</key>
-	<string>/Users/cdzombak/opt/bin/windowstack</string>
+	<string>/opt/homebrew/bin/windowstack2</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>StandardErrorPath</key>
 	<string>/tmp/com.dzombak.windowstack2.stderr</string>
 	<key>StandardOutPath</key>
-	<string>/Users/cdzombak/.windowstack.log</string>
+	<string>/tmp/.windowstack.log</string>
 </dict>
 </plist>

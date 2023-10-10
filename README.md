@@ -2,9 +2,11 @@
 
 Keep a log of frontmost macOS window titles in your terminal, for when you get distracted and need to remember, “what was I doing?”
 
-## Installation
+## Installation via Homebrew
 
-TODO
+```shell
+brew install cdzombak/oss/windowstack2
+```
 
 ## Usage
 
@@ -18,7 +20,23 @@ Your terminal app needs to be allowed Accessibility permission, in the Security 
 
 ### Background Job
 
-TODO
+It is possible to run windowstack2 in the background, constantly writing a log of window titles. This doesn't always work reliably due to macOS's privacy controls, and this mode is not well supported. To install the background job, after installing the program via Homebrew, run:
+
+```shell
+wget -P "$HOME/Library/LaunchAgents" https://raw.githubusercontent.com/cdzombak/windowstack2/main/com.dzombak.windowstack2.plist
+```
+
+Customize the plist file as desired. In particular, you may wish to adjust the `StandardOutPath`, which sets the logfile location:
+
+```shell
+open -a TextEdit "$HOME/Library/LaunchAgents/com.dzombak.windowstack2.plist"
+```
+
+Finally, load the launch agent:
+
+```shell
+launchctl load "$HOME/Library/LaunchAgents/com.dzombak.windowstack2.plist"
+```
 
 ## Configuration
 
