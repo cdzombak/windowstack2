@@ -69,7 +69,7 @@ This implementation is simpler and actually works.
 
 ## About
 
-- GitHub: [cdzombak/windowsack2](https://github.com/cdzombak/windowstack2)
+- GitHub: [cdzombak/windowstack2](https://github.com/cdzombak/windowstack2)
 - Author: [Chris Dzombak](https://www.dzombak.com)
 
 ## License
